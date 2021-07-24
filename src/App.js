@@ -1,32 +1,27 @@
 import React, { useState, useEffect } from "react";
 import MyTable from "./MyTable";
-import "./App.css";
 
 const App = () => {
-  const [tblData, setTblData] = useState(null);
-  const [isLoading, setLoading] = useState(true);
+  const [tblData, setTblData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const URL = "https://jsonplaceholder.typicode.com/users";
 
-  const getData = () => {
-    fetch(URL)
-      .then((response) => response.json())
-      .then((data) => {
-        setTblData(data);
-        setLoading(false);
-      });
+  const fetchData = async () => {
+    const jsonData = await fetch(URL);
+    const data = await jsonData.json();
+
+    setTblData(data);
+    setLoading(false);
   };
 
-  useEffect(() => getData(), []);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  if (isLoading) {
+  if (loading) {
     return <h1>loading...</h1>;
-  }
-
-  return (
-    <div className="App">
-      <MyTable tblData={tblData} />
-    </div>
-  );
+  } else return <MyTable tblData={tblData} />;
 };
 
 export default App;

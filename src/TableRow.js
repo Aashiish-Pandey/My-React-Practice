@@ -4,7 +4,6 @@ const TableRow = ({ tblData }) => {
   return tblData.map((row) => (
     <tr>
       <td>{row.id}</td>
-      <td>{row.name}</td>
       <td>{row.username}</td>
       <td>{row.email}</td>
       <td>{row.address.city}</td>
