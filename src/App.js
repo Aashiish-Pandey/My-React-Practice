@@ -1,27 +1,26 @@
-import React, { useState, useEffect } from "react";
-import MyTable from "./MyTable";
+import React from "react";
+import Child from "./Child";
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: "",
+    };
+  }
 
-const App = () => {
-  const [tblData, setTblData] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const URL = "https://jsonplaceholder.typicode.com/users";
-
-  const fetchData = async () => {
-    const jsonData = await fetch(URL);
-    const data = await jsonData.json();
-
-    setTblData(data);
-    setLoading(false);
+  handleCallback = (childData) => {
+    this.setState({ name: childData });
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  if (loading) {
-    return <h1>loading...</h1>;
-  } else return <MyTable tblData={tblData} />;
-};
-
+  render() {
+    const { name } = this.state;
+    return (
+      <div>
+        
+        <Child parentCallback={this.handleCallback} />
+        {name}
+      </div>
+    );
+  }
+}
 export default App;
